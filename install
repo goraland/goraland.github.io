@@ -1,0 +1,73 @@
+#!/bin/bash
+set -euo pipefail
+
+REPO="https://github.com/goraland/gora"
+BINARY="gora"
+BASE_URL="https://goraland.github.io/downloads"
+INSTALL_DIR="/usr/local/bin"
+
+if [ ! -w "$INSTALL_DIR" ] && [ ! -w "/usr/local/bin" ]; then
+  INSTALL_DIR="$HOME/.local/bin"
+  mkdir -p "$INSTALL_DIR"
+fi
+
+echo "Installing gora..."
+
+OS=$(uname -s | tr '[:upper:]' '[:lower:]')
+ARCH=$(uname -m)
+
+case "$ARCH" in
+  x86_64)  ARCH="amd64" ;;
+  aarch64) ARCH="arm64" ;;
+  arm64)   ARCH="arm64" ;;
+  *)
+    echo "Unsupported architecture: $ARCH"
+    echo "Building from source instead..."
+    if command -v go &>/dev/null; then
+      go install github.com/goraland/gora/cmd/gora@latest
+      echo "Installed via go install"
+    else
+      echo "Go is not installed. Please install Go or download the binary from $BASE_URL"
+      exit 1
+    fi
+    exit 0
+    ;;
+esac
+
+if command -v curl &>/dev/null; then
+  DOWNLOADER="curl -fL"
+elif command -v wget &>/dev/null; then
+  DOWNLOADER="wget -O-"
+else
+  echo "Neither curl nor wget found. Please install one of them."
+  exit 1
+fi
+
+LATEST=$(curl -sfL "$BASE_URL/LATEST" 2>/dev/null || echo "")
+
+if [ -z "$LATEST" ]; then
+  echo "Could not determine latest version. Installing from source..."
+  if command -v go &>/dev/null; then
+    go install github.com/goraland/gora/cmd/gora@latest
+    echo "Installed successfully!"
+    exit 0
+  else
+    echo "Please install Go or download from $BASE_URL"
+    exit 1
+  fi
+fi
+
+DOWNLOAD_URL="$BASE_URL/${BINARY}_${OS}_${ARCH}.tar.gz"
+echo "Downloading gora $LATEST..."
+$DOWNLOADER "$DOWNLOAD_URL" | tar -xz -C /tmp "$BINARY"
+mv "/tmp/$BINARY" "$INSTALL_DIR/$BINARY"
+chmod +x "$INSTALL_DIR/$BINARY"
+
+echo "Installed gora $LATEST to $INSTALL_DIR/$BINARY"
+echo "Run 'gora help' to get started."
+echo ""
+echo "Quick start:"
+echo "  export OPENAI_API_KEY=your-key-here"
+echo "  gora run 'Hello, world!'"
+echo ""
+echo "For more information, visit $REPO"
