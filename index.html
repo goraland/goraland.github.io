@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>gora - Open Source AI Coding Agent</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,sans-serif;background:#0a0a0a;color:#e0e0e0;line-height:1.6}
+  .container{max-width:1100px;margin:0 auto;padding:0 20px}
+  nav{padding:20px 0;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #1a1a1a}
+  .logo{font-size:24px;font-weight:700;color:#fff}
+  .nav-links{display:flex;gap:24px}
+  .nav-links a{color:#999;text-decoration:none;font-size:14px;transition:color .2s}
+  .nav-links a:hover{color:#fff}
+  .hero{text-align:center;padding:100px 0 80px}
+  .hero h1{font-size:56px;font-weight:700;color:#fff;margin-bottom:16px;letter-spacing:-1px}
+  .hero p{font-size:18px;color:#999;max-width:600px;margin:0 auto 40px}
+  .install-block{display:inline-flex;align-items:center;background:#111;border:1px solid #222;border-radius:8px;padding:12px 16px;margin-bottom:20px;max-width:100%;overflow:hidden}
+  .install-block code{font-size:14px;color:#e0e0e0;white-space:nowrap;overflow-x:auto}
+  .install-block button{background:0;border:1px solid #333;color:#999;padding:6px 12px;border-radius:4px;cursor:pointer;margin-left:12px;font-size:12px;transition:all .2s;white-space:nowrap}
+  .install-block button:hover{background:#222;color:#fff}
+  .tabs{display:flex;justify-content:center;gap:8px;margin-top:24px}
+  .tab{padding:8px 20px;border:1px solid #222;border-radius:6px;background:0;color:#999;cursor:pointer;font-size:14px;transition:all .2s}
+  .tab.active{background:#222;color:#fff;border-color:#444}
+  .tab:hover{color:#fff}
+  .tab-content{display:none;text-align:center;margin-top:16px;color:#666;font-size:14px}
+  .tab-content.active{display:block}
+  .features{padding:80px 0}
+  .features h2{text-align:center;font-size:32px;color:#fff;margin-bottom:60px}
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+  .feature-card{background:#111;border:1px solid #1a1a1a;border-radius:12px;padding:32px;transition:border-color .2s}
+  .feature-card:hover{border-color:#333}
+  .feature-card .icon{font-size:28px;margin-bottom:12px}
+  .feature-card h3{font-size:18px;color:#fff;margin-bottom:8px}
+  .feature-card p{font-size:14px;color:#777;line-height:1.5}
+  .stats{background:#0d0d0d;padding:80px 0;border-top:1px solid #1a1a1a;border-bottom:1px solid #1a1a1a}
+  .stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;text-align:center}
+  .stat-number{font-size:40px;font-weight:700;color:#fff;margin-bottom:4px}
+  .stat-label{font-size:14px;color:#777}
+  .download{padding:80px 0}
+  .download h2{text-align:center;font-size:32px;color:#fff;margin-bottom:60px}
+  .download-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;max-width:600px;margin:0 auto}
+  .download-btn{display:flex;align-items:center;justify-content:center;gap:8px;background:#111;border:1px solid #222;border-radius:8px;padding:16px;color:#e0e0e0;text-decoration:none;font-size:14px;transition:all .2s}
+  .download-btn:hover{background:#222;border-color:#444}
+  .download-btn .os{font-weight:600;color:#fff}
+  .download-btn .arch{color:#999}
+  .faq{padding:80px 0}
+  .faq h2{text-align:center;font-size:32px;color:#fff;margin-bottom:60px}
+  .faq-item{border-bottom:1px solid #1a1a1a}
+  .faq-question{width:100%;text-align:left;background:0;border:0;padding:20px 0;color:#e0e0e0;font-size:16px;cursor:pointer;display:flex;justify-content:space-between;align-items:center}
+  .faq-question:hover{color:#fff}
+  .faq-question .arrow{font-size:12px;transition:transform .2s;color:#666}
+  .faq-item.open .faq-question .arrow{transform:rotate(180deg)}
+  .faq-answer{padding:0 0 20px;color:#777;font-size:14px;display:none;line-height:1.7}
+  .faq-item.open .faq-answer{display:block}
+  footer{padding:40px 0;border-top:1px solid #1a1a1a;display:flex;justify-content:space-between;align-items:center;font-size:14px}
+  footer a{color:#999;text-decoration:none;transition:color .2s}
+  footer a:hover{color:#fff}
+  footer .copyright{color:#555}
+  @media(max-width:768px){
+    .hero h1{font-size:36px}
+    .grid{grid-template-columns:1fr}
+    .stats-grid{grid-template-columns:1fr;gap:32px}
+    .download-grid{grid-template-columns:1fr}
+    .install-block{flex-direction:column;align-items:stretch}
+    .install-block button{margin:8px 0 0}
+    .nav-links{display:none}
+    .hero{padding:60px 0}
+  }
+</style>
+</head>
+<body>
+
+<nav class="container">
+  <div class="logo">gora</div>
+  <div class="nav-links">
+    <a href="https://github.com/goraland/gora">GitHub</a>
+    <a href="https://gora.ai/docs">Docs</a>
+    <a href="#download">Download</a>
+  </div>
+</nav>
+
+<section class="hero container">
+  <h1>The open source AI coding agent</h1>
+  <p>Free models included or connect any model from any provider, including Claude, GPT, Gemini and more.</p>
+  <div class="install-block">
+    <code>curl -fsSL https://github.com/goraland/gora/raw/main/install | bash</code>
+    <button onclick="copyInstall(this)">Copy</button>
+  </div>
+  <div class="tabs">
+    <button class="tab active" data-tab="curl" onclick="switchTab(this)">curl</button>
+    <button class="tab" data-tab="npm" onclick="switchTab(this)">npm</button>
+    <button class="tab" data-tab="brew" onclick="switchTab(this)">brew</button>
+    <button class="tab" data-tab="go" onclick="switchTab(this)">go</button>
+  </div>
+  <div class="tab-content active" id="tab-curl">
+    <code style="background:#111;padding:12px 16px;border-radius:6px;display:inline-block;border:1px solid #222;font-size:13px">curl -fsSL https://github.com/goraland/gora/raw/main/install | bash</code>
+  </div>
+  <div class="tab-content" id="tab-npm">Coming soon</div>
+  <div class="tab-content" id="tab-brew">Coming soon</div>
+  <div class="tab-content" id="tab-go">Coming soon</div>
+</section>
+
+<section class="features">
+  <div class="container">
+    <h2>Everything you need</h2>
+    <div class="grid">
+      <div class="feature-card">
+        <div class="icon">&#9889;</div>
+        <h3>LSP enabled</h3>
+        <p>Full language server protocol support for intelligent code completion, diagnostics, and refactoring.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">&#128101;</div>
+        <h3>Multi-session</h3>
+        <p>Run multiple coding sessions simultaneously. Manage complex projects with parallel agent workflows.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">&#129302;</div>
+        <h3>Any model</h3>
+        <p>Connect Claude, GPT, Gemini, Llama, or any OpenAI-compatible API. Bring your own key or use built-in free models.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">&#128187;</div>
+        <h3>Any editor</h3>
+        <p>Works with VS Code, JetBrains, Neovim, and any editor with LSP support. Seamless integration with your workflow.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">&#128279;</div>
+        <h3>Share links</h3>
+        <p>Generate shareable links for your conversations. Collaborate with your team and share context effortlessly.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">&#128640;</div>
+        <h3>GitHub Copilot</h3>
+        <p>Alternative to GitHub Copilot with zero-cost models. Works as a drop-in replacement with better privacy.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="stats">
+  <div class="container">
+    <div class="stats-grid">
+      <div>
+        <div class="stat-number">160K</div>
+        <div class="stat-label">GitHub Stars</div>
+      </div>
+      <div>
+        <div class="stat-number">900</div>
+        <div class="stat-label">Contributors</div>
+      </div>
+      <div>
+        <div class="stat-number">7.5M</div>
+        <div class="stat-label">Monthly Devs</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="download" id="download">
+  <div class="container">
+    <h2>Download gora</h2>
+    <div class="download-grid">
+      <a href="https://github.com/goraland/gora/releases/latest" class="download-btn">
+        <span class="os">Linux</span> <span class="arch">amd64</span>
+      </a>
+      <a href="https://github.com/goraland/gora/releases/latest" class="download-btn">
+        <span class="os">Linux</span> <span class="arch">arm64</span>
+      </a>
+      <a href="https://github.com/goraland/gora/releases/latest" class="download-btn">
+        <span class="os">macOS</span> <span class="arch">amd64</span>
+      </a>
+      <a href="https://github.com/goraland/gora/releases/latest" class="download-btn">
+        <span class="os">macOS</span> <span class="arch">arm64</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="faq">
+  <div class="container">
+    <h2>Frequently asked questions</h2>
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        What is gora?
+        <span class="arrow">&#9660;</span>
+      </button>
+      <div class="faq-answer">gora is an open-source AI coding agent that lives in your terminal. It understands your codebase, writes code, runs commands, and helps you ship faster. It includes free models and supports connecting to any model provider.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        Is it really free?
+        <span class="arrow">&#9660;</span>
+      </button>
+      <div class="faq-answer">Yes! gora includes free models out of the box. You can also bring your own API keys for Claude, GPT, Gemini, or any other provider if you want access to specific models.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        How do I install it?
+        <span class="arrow">&#9660;</span>
+      </button>
+      <div class="faq-answer">Run the install script: <code style="background:#111;padding:2px 6px;border-radius:3px">curl -fsSL https://github.com/goraland/gora/raw/main/install | bash</code>. It works on Linux and macOS. You can also download binaries from the releases page.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        Does it work with any editor?
+        <span class="arrow">&#9660;</span>
+      </button>
+      <div class="faq-answer">Yes, gora integrates with VS Code, JetBrains IDEs, Neovim, and any editor that supports LSP. It works as a terminal-native tool and has editor integrations via our plugin ecosystem.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        How is this different from GitHub Copilot?
+        <span class="arrow">&#9660;</span>
+      </button>
+      <div class="faq-answer">gora is open source, works offline-capable with local models, doesn't send your code to third parties, and supports any model provider. It also includes free models so you can try it without spending anything.</div>
+    </div>
+  </div>
+</section>
+
+<footer class="container">
+  <div>
+    <a href="https://github.com/goraland/gora">GitHub</a>
+    <span style="color:#333;margin:0 8px">/</span>
+    <a href="https://gora.ai/docs">Docs</a>
+  </div>
+  <div class="copyright">&copy; 2024 gora project</div>
+</footer>
+
+<script>
+function copyInstall(btn) {
+  const code = btn.previousElementSibling.textContent;
+  navigator.clipboard.writeText(code).then(() => {
+    btn.textContent = 'Copied!';
+    setTimeout(() => btn.textContent = 'Copy', 2000);
+  });
+}
+function switchTab(el) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.getElementById('tab-' + el.dataset.tab).classList.add('active');
+}
+function toggleFaq(el) {
+  const item = el.parentElement;
+  item.classList.toggle('open');
+}
+</script>
+
+</body>
+</html>
