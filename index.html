@@ -101,7 +101,7 @@ footer .cell+.cell{border-left:1px solid var(--border-weak)}
   <div class="logo">OpenGora</div>
   <div class="nav-links">
     <a href="https://github.com/goraland/opengora">GitHub</a>
-    <a href="#download">Download</a>
+    <a href="https://www.npmjs.com/package/opengora-ai">npm</a>
     <a href="#faq">FAQ</a>
     <a href="#download" class="nav-cta">&#8595; Install</a>
   </div>
@@ -126,7 +126,10 @@ footer .cell+.cell{border-left:1px solid var(--border-weak)}
         </div>
       </div>
       <div class="panel" id="panel-npm">
-        <div class="command"><span class="command-code" style="color:var(--text-weaker)">npm install -g opengora &mdash; coming soon</span></div>
+        <div class="command" onclick="copyCmd(this)">
+          <span class="command-code"><span class="highlight">npm install</span> -g opengora-ai</span>
+          <span class="copy-btn">Copy</span>
+        </div>
       </div>
       <div class="panel" id="panel-brew">
         <div class="command"><span class="command-code" style="color:var(--text-weaker)">brew install goraland/tap/opengora &mdash; coming soon</span></div>
