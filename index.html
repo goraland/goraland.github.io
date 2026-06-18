@@ -230,15 +230,9 @@ footer .cell+.cell{border-left:1px solid var(--border-weak)}
 </div>
 
 <script>
-fetch('https://api.github.com/repos/goraland/opengora/releases/latest')
-  .then(r => r.json())
-  .then(data => {
-    const tag = data.tag_name || 'latest'
-    document.getElementById('latest-version').textContent = tag
-  })
-  .catch(() => {
-    document.getElementById('latest-version').textContent = 'v0.1.0'
-  })
+// Version auto-updated by release workflow
+const LATEST_VERSION = 'v0.1.0'
+document.getElementById('latest-version').textContent = LATEST_VERSION
 
 function switchTab(el) {
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'))
