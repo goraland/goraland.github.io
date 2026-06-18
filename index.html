@@ -111,6 +111,7 @@ footer .cell+.cell{border-left:1px solid var(--border-weak)}
   <h1>The open source AI coding agent</h1>
   <p>Free models included or connect any model from any provider, including Claude, GPT, Gemini and more.</p>
 
+  <p style="margin-bottom:8px;font-size:13px;color:var(--text-weak)">Latest: <span id="latest-version">loading...</span></p>
   <div style="max-width:100%;overflow:hidden">
     <div class="tablist">
       <button class="tab active" data-tab="curl" onclick="switchTab(this)">curl</button>
@@ -229,6 +230,16 @@ footer .cell+.cell{border-left:1px solid var(--border-weak)}
 </div>
 
 <script>
+fetch('https://api.github.com/repos/goraland/opengora/releases/latest')
+  .then(r => r.json())
+  .then(data => {
+    const tag = data.tag_name || 'latest'
+    document.getElementById('latest-version').textContent = tag
+  })
+  .catch(() => {
+    document.getElementById('latest-version').textContent = 'v0.1.0'
+  })
+
 function switchTab(el) {
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'))
   el.classList.add('active')
