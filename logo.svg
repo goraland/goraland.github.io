@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="200.00012mm"
+   height="40.000031mm"
+   viewBox="0 0 200.00012 40.00003"
+   version="1.1"
+   id="svg1"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm">
+    <inkscape:page
+       x="-1.5510869e-21"
+       y="0"
+       width="200.00014"
+       height="40.000031"
+       id="page2"
+       margin="0"
+       bleed="0" />
+  </sodipodi:namedview>
+  <defs
+     id="defs1" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(139.43545,-45.243694)">
+    <text
+       xml:space="preserve"
+       style="font-size:34.4785px;line-height:49.0239px;font-family:'JLS Data GothicC';-inkscape-font-specification:'JLS Data GothicC';text-align:start;letter-spacing:0px;writing-mode:lr-tb;direction:ltr;text-anchor:start;fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#03fafa;stroke-width:1.41685;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:0;stroke-opacity:1;paint-order:stroke markers fill"
+       x="-165.59204"
+       y="70.820618"
+       id="text1-2-2-2-6"
+       transform="scale(0.83776382,1.1936538)"><tspan
+         sodipodi:role="line"
+         id="tspan1-1-7-6-2"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'IBM Logo';-inkscape-font-specification:'IBM Logo';fill:#000000;fill-opacity:1;stroke:#03fafa;stroke-width:1.41685;stroke-opacity:1"
+         x="-165.59204"
+         y="70.820618">OpenGora</tspan></text>
+  </g>
+</svg>
