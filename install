@@ -2,7 +2,7 @@
 set -euo pipefail
 APP=opengora
 # This version is auto-updated by the release workflow
-LATEST_VERSION="0.1.7"
+LATEST_VERSION="0.1.8"
 
 MUTED='\033[0;2m'
 RED='\033[0;31m'
