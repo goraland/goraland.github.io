@@ -1,0 +1,53 @@
+name: build-baseline
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Version to build baseline for (e.g., 0.1.5)"
+        required: true
+        type: string
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: goraland/opengora
+          token: ${{ secrets.OPENGORA_BUILD_PAT }}
+          fetch-depth: 1
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version-file: package.json
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Build baseline binary
+        env:
+          OPENGORA_VERSION: ${{ inputs.version }}
+          OPENGORA_CHANNEL: latest
+          OPENGORA_RELEASE: "true"
+        run: |
+          ./packages/opengora/script/build.ts --single --baseline
+
+      - name: Create archive
+        run: |
+          cd packages/opengora/dist
+          for dir in opengora-*; do
+            if [ -d "$dir/bin" ]; then
+              tar -czf "${dir}.tar.gz" -C "$dir/bin" .
+            fi
+          done
+
+      - name: Upload baseline to release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          VERSION="v${{ inputs.version }}"
+          for f in packages/opengora/dist/opengora-*.tar.gz; do
+            echo "Uploading $f to $VERSION"
+            gh release upload "$VERSION" "$f" --clobber --repo goraland/goraland.github.io
+          done
