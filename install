@@ -159,6 +159,13 @@ else
       fi
     fi
 
+    if [ -z "$requested_version" ]; then
+        specific_version="$LATEST_VERSION"
+    else
+        specific_version="${requested_version#v}"
+    fi
+
+    # Build the asset URL, starting with the most specific target
     target="$os-$arch"
     if [ "$needs_baseline" = "true" ]; then
       target="$target-baseline"
@@ -169,6 +176,9 @@ else
 
     filename="$APP-$target$archive_ext"
 
+    # Save the generic fallback target name
+    generic_target="$os-$arch"
+    generic_filename="$APP-$generic_target$archive_ext"
 
     if [ "$os" = "linux" ]; then
         if ! command -v tar >/dev/null 2>&1; then
@@ -182,21 +192,24 @@ else
         fi
     fi
 
-    if [ -z "$requested_version" ]; then
-        specific_version="$LATEST_VERSION"
-    else
-        specific_version="${requested_version#v}"
-    fi
-
-    # Download from the public goraland.github.io releases
-    url="https://github.com/goraland/goraland.github.io/releases/download/v${specific_version}/$filename"
-
     # Verify the release exists before downloading
     http_status=$(curl -sI -o /dev/null -w "%{http_code}" "https://github.com/goraland/goraland.github.io/releases/tag/v${specific_version}")
     if [ "$http_status" = "404" ]; then
         echo -e "${RED}Error: Release v${specific_version} not found${NC}"
         echo -e "${MUTED}Available releases: https://github.com/goraland/goraland.github.io/releases${NC}"
         exit 1
+    fi
+
+    # Pick the first asset URL that exists (prefer specific over generic)
+    base_url="https://github.com/goraland/goraland.github.io/releases/download/v${specific_version}"
+    url="${base_url}/${filename}"
+    if [ "$filename" != "$generic_filename" ]; then
+        if curl -sfI -o /dev/null "$url" 2>/dev/null; then
+            : # specific asset exists, use it
+        else
+            filename="$generic_filename"
+            url="${base_url}/${generic_filename}"
+        fi
     fi
 fi
 
