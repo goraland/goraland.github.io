@@ -234,13 +234,27 @@ download_and_install() {
     print_message info "\n${MUTED}Installing ${NC}opengora ${MUTED}version: ${NC}$specific_version"
     local tmp_dir="${TMPDIR:-/tmp}/opengora_install_$$"
     mkdir -p "$tmp_dir"
+    local archive="$tmp_dir/$filename"
 
-    curl -# -L -o "$tmp_dir/$filename" "$url"
+    local attempt=0
+    while [ "$attempt" -lt 3 ]; do
+        attempt=$((attempt + 1))
+        curl -sS -L -o "$archive" "$url"
+        if command -v gzip >/dev/null 2>&1 && [ "$os" = "linux" ]; then
+            if gzip -t "$archive" 2>/dev/null; then
+                break
+            fi
+            print_message info "${MUTED}Download corrupted, retrying ($attempt/3)...${NC}"
+            sleep 2
+        else
+            break
+        fi
+    done
 
     if [ "$os" = "linux" ]; then
-        tar -xzf "$tmp_dir/$filename" -C "$tmp_dir"
+        tar -xzf "$archive" -C "$tmp_dir"
     else
-        unzip -q "$tmp_dir/$filename" -d "$tmp_dir"
+        unzip -q "$archive" -d "$tmp_dir"
     fi
 
     mv "$tmp_dir/opengora" "$INSTALL_DIR"
