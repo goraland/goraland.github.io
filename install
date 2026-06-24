@@ -252,7 +252,7 @@ download_and_install() {
     local attempt=0
     while [ "$attempt" -lt 3 ]; do
         attempt=$((attempt + 1))
-        curl -sS -L -o "$archive" "$url"
+        curl -# -L -o "$archive" "$url"
         if command -v gzip >/dev/null 2>&1 && [ "$os" = "linux" ]; then
             if gzip -t "$archive" 2>/dev/null; then
                 break
