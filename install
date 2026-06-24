@@ -373,8 +373,15 @@ if [ -n "${GITHUB_ACTIONS-}" ] && [ "${GITHUB_ACTIONS}" == "true" ]; then
     print_message info "Added $INSTALL_DIR to \$GITHUB_PATH"
 fi
 
+LOGO_W="\033[97m"
+LOGO_C="\033[0m\033[36m"
+LOGO_O="\033[38;5;214m"
+LOGO_RST="\033[0m"
+
 echo -e ""
-echo -e "${MUTED}OpenGora${NC}"
+echo -e "${LOGO_W}█▀▀█ █▀▀█ █▀▀█ █▀▀▄ ${LOGO_C}█▀▀█ █▀▀█ ${LOGO_O}█▀▀█ ▀▀▀█${LOGO_RST}"
+echo -e "${LOGO_W}█░░█ █░░█ █▀▀▀ █░░█ ${LOGO_C}▀▀▀█ █░░█ ${LOGO_O}█░░░ █▀▀█${LOGO_RST}"
+echo -e "${LOGO_W}▀▀▀▀ █▀▀▀ ▀▀▀▀ ▀  ▀ ${LOGO_C}▀▀▀▀ ▀▀▀▀ ${LOGO_O}▀    ▀▀▀▀${LOGO_RST}"
 echo -e ""
 echo -e "${MUTED}OpenGora includes free models, to start:${NC}"
 echo -e ""
